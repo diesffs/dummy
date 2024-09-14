@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dummy</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="game-container">
+    <div id="zone-info">Zone <span id="zone-level"></span></div>
+
+    <div class="enemy-info">
+      <img id="enemy-icon" src="enemy.png" alt="Enemy Icon">
+      <div id="enemy-hp">HP: <span id="enemy-hp-value"></span></div>
+
+      <!-- HP Bar container -->
+      <div class="hp-bar-container">
+        <div class="hp-bar" id="hp-bar"></div> <!-- Actual HP bar -->
+      </div>
+    </div>
+
+    <div class="control-buttons">
+      <button id="start-button">gay button</button>
+      <button id="stop-button">Stop</button>
+    </div>
+
+    <div class="resources">
+      <div>Gold: <span id="gold-value"></span></div>
+      <div>Damage: <span id="damage-value"></span></div>
+      <div>Souls: <span id="souls-value"></span></div>
+    </div>
+
+    <div class="action-buttons">
+      <!-- Update the upgrade button text to show the starting cost -->
+      <button id="upgrade-button" disabled></button>
+      <button id="rebirth-button" disabled>Rebirth</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
