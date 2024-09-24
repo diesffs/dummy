@@ -8,7 +8,7 @@
   let baseDamage = 1;
   let currentDamage = baseDamage;
   let baseGoldGain = 1;
-  let upgradeCost = 5;
+  let upgradeCost = 10;
   let upgrades = 0;
   let isFighting = false;
   let fightInterval;
@@ -70,7 +70,7 @@
     upgrades = parseInt(localStorage.getItem("upgrades")) || 0;
     currentDamage =
       parseInt(localStorage.getItem("currentDamage")) || baseDamage;
-    upgradeCost = parseInt(localStorage.getItem("upgradeCost")) || 5;
+    upgradeCost = parseInt(localStorage.getItem("upgradeCost")) || 10;
     stopFight();
   }
 
@@ -226,7 +226,7 @@
       souls = 0;
       upgrades = 0;
       currentDamage = baseDamage;
-      upgradeCost = 5;
+      upgradeCost = 10;
       enemyHp = 5;
       maxEnemyHp = enemyHp;
 
