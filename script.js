@@ -150,7 +150,7 @@
     startButton.disabled = false;
     stopButton.disabled = true;
 
-    zone = 1;
+    zone = highestZoneReached * 0.5;
     enemyHp = 5;
     maxEnemyHp = enemyHp;
     zoneLevelElement.textContent = zone;
