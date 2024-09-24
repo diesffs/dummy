@@ -22,6 +22,7 @@
   const hpBarElement = document.getElementById("hp-bar");
   const upgradeButton = document.getElementById("upgrade-button");
   const rebirthButton = document.getElementById("rebirth-button");
+  const resetButton = document.getElementById("reset-button");
   const startButton = document.getElementById("start-button");
   const stopButton = document.getElementById("stop-button");
   const enemyIconElement = document.getElementById("enemy-icon");
@@ -109,6 +110,7 @@
     stopButton.disabled = false;
     upgradeButton.disabled = true;
     rebirthButton.disabled = true;
+    resetButton.disabled = true;
 
     damagePerTick = currentDamage / 100;
 
@@ -149,6 +151,7 @@
     isFighting = false;
     startButton.disabled = false;
     stopButton.disabled = true;
+    resetButton.disabled = false;
 
     zone = Math.floor(highestZoneReached * 0.5);
     enemyHp = 5;
@@ -211,6 +214,39 @@
     }
   }
 
+  function reset() {
+    const confirmed = confirm(
+      "Are you sure you want to reset the game? This will erase all progress."
+    );
+
+    if (confirmed) {
+      zone = 1;
+      highestZoneReached = 1;
+      gold = 0;
+      souls = 0;
+      upgrades = 0;
+      currentDamage = baseDamage;
+      upgradeCost = 5;
+      enemyHp = 5;
+      maxEnemyHp = enemyHp;
+
+      zoneLevelElement.textContent = zone;
+      goldValueElement.textContent = gold;
+      damageValueElement.textContent = currentDamage;
+      soulsValueElement.textContent = souls;
+      enemyHpValueElement.textContent = enemyHp;
+      upgradeButton.textContent = `Upgrade Damage (Cost: ${upgradeCost})`;
+
+      updateHpBar();
+      updateUpgradeButtonState();
+      updateRebirthButtonText();
+
+      localStorage.clear();
+
+      saveGameState();
+    }
+  }
+
   function updateUpgradeButtonState() {
     if (gold >= upgradeCost && !isFighting) upgradeButton.disabled = false;
     else upgradeButton.disabled = true;
@@ -227,4 +263,5 @@
   stopButton.addEventListener("click", stopFight);
   upgradeButton.addEventListener("click", upgradeDamage);
   rebirthButton.addEventListener("click", rebirth);
+  resetButton.addEventListener("click", reset);
 })();
