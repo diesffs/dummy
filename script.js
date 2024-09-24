@@ -11,8 +11,7 @@
   let upgradeCost = 10;
   let upgrades = 0;
   let isFighting = false;
-  let fightInterval;
-  let damagePerTick;
+  let damagePerFrame;
 
   const zoneLevelElement = document.getElementById("zone-level");
   const goldValueElement = document.getElementById("gold-value");
@@ -25,7 +24,6 @@
   const resetButton = document.getElementById("reset-button");
   const startButton = document.getElementById("start-button");
   const stopButton = document.getElementById("stop-button");
-  const enemyIconElement = document.getElementById("enemy-icon");
 
   function calculateGoldGain() {
     const exponent = 1.09;
@@ -112,18 +110,16 @@
     rebirthButton.disabled = true;
     resetButton.disabled = true;
 
-    damagePerTick = currentDamage / 100;
+    damagePerFrame = currentDamage / 60; // Damage per frame for 60 FPS
 
     function damageTick() {
       if (!isFighting) return;
 
-      enemyHp -= damagePerTick;
+      enemyHp -= damagePerFrame;
       enemyHpValueElement.textContent = Math.max(0, Math.floor(enemyHp));
       updateHpBar();
 
       if (enemyHp <= 0) {
-        clearInterval(fightInterval);
-
         zone++;
         highestZoneReached = Math.max(highestZoneReached, zone);
         zoneLevelElement.textContent = zone;
@@ -137,17 +133,17 @@
         updateUpgradeButtonState();
         updateRebirthButtonText();
 
-        fightInterval = setInterval(damageTick, 1);
-
         saveGameState();
       }
+
+      // Continue the loop, whether the enemy is killed or not
+      requestAnimationFrame(damageTick);
     }
 
-    fightInterval = setInterval(damageTick, 1);
+    requestAnimationFrame(damageTick); // Start the damage loop
   }
 
   function stopFight() {
-    clearInterval(fightInterval);
     isFighting = false;
     startButton.disabled = false;
     stopButton.disabled = true;
@@ -178,7 +174,7 @@
       goldValueElement.textContent = gold;
       upgradeButton.textContent = `Upgrade Damage (Cost: ${upgradeCost})`;
 
-      damagePerTick = currentDamage / 100;
+      damagePerFrame = currentDamage / 60; // Recalculate for 60 FPS
 
       updateUpgradeButtonState();
 
@@ -205,7 +201,7 @@
       rebirthButton.disabled = true;
       upgradeCost = calculateUpgradeCost();
       upgradeButton.textContent = `Upgrade Damage (Cost: ${upgradeCost})`;
-      damagePerTick = currentDamage / 100;
+      damagePerFrame = currentDamage / 60; // Adjust for 60 FPS
 
       updateUpgradeButtonState();
       updateRebirthButtonText();
